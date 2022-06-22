@@ -1,6 +1,3 @@
---DROP VIEW IF EXISTS bilbo.dm_feux_annee_8;
---CREATE VIEW bilbo.dm_feux_annee_8 AS
-
 WITH tab AS (SELECT feux.hex_id, date.year AS annee, feux.objectid, l_2014_n1 AS c1, h3_cell_area(feux.hex_id::h3index) AS surface, feux.province, feux.commune 
 FROM bilbo.faits_feux_13 AS feux 
     JOIN bilbo.dim_date AS date ON feux.begdate=date.date_id 
