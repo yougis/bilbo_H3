@@ -30,4 +30,3 @@ clean-targets:         # directories to be removed by `dbt clean`
 models:
   bilbo_dbt:
     +materialized: table
-
