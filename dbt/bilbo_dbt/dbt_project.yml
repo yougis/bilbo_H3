@@ -33,4 +33,5 @@ models:
 
 # Define variables here
 vars:
-  event_type: activation
+  sep: "+"
+  dict_shortcut: {"dynamic_to_uniform":"dtu"}

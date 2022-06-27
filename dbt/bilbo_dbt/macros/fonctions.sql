@@ -8,5 +8,6 @@
     {%- if args[0] == "min_agg" %}MIN({{alias[table_name.index(key)]}}.{{args[1]}}){% if as_statement %} AS {{args[2]}}{% endif %}{% endif %}
     {%- if args[0] == "min_init_cap_agg" %}MIN(INITCAP({{alias[table_name.index(key)]}}.{{args[1]}})){% if as_statement %} AS {{args[2]}}{% endif %}{% endif %}
     {%- if args[0] == "geom_agg" %}h3_to_geo_boundary(h3_to_parent(MIN({{alias[table_name.index(key)]}}.{{args[1]}})::h3index,{{args[2]}}))::geometry{% if as_statement %} AS geometry{% endif %}{% endif %}
+    {%- if args[0] == "json_agg" %}JSON_AGG(json_build_object(args[0],subquery.args[1],args[2],subquery.args[3])){% if as_statement %} AS args[4]{% endif %}{% endif %}
     {%- if args[0] == "id_esri" %}row_number() OVER(){% if as_statement %} AS id_esri{% endif %}{% endif %}
 {%- endmacro -%}
