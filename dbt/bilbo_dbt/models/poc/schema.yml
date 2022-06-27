@@ -7,12 +7,7 @@ models:
     columns:
       - name: event_id
         description: This is a unique identifier for the event
-        tests:
-          - unique
-          - not_null
 
       - name: user-id
         quote: true
         description: The user who performed the event
-        tests:
-          - not_null
