@@ -1,4 +1,4 @@
-{%- macro select_statement(dict_attributs, list_jointures, name_of_the_table, alias_of_the_table, granularite, set_alias=false, set_index=false, set_esri_requirements=false) -%}
+{%- macro select_statement(dict_attributs, list_jointures, name_of_the_table="my_tab", mode="tab", set_index=false, set_esri_requirements=false) -%}
 {%- set ns = namespace() -%}
 {%- set table_name = [] -%}
 {%- set alias = [] -%}
@@ -28,14 +28,17 @@
         {%- if var("sep") in table_name[2*i+j] -%}
             {%- set list = table_name[2*i+j].split(var("sep")) -%}
                 {%- if list[0] == "dynamic_to_uniform" -%}
-                    {%- do replace_item(table_name,["(SELECT * FROM ",schema,".dynamic_to_uniform()) AS ", var("dict_shortcut")["dynamic_to_uniform"]]|join(""),2*i+j) -%}
-                    {%- do replace_item(alias,var("dict_shortcut")["dynamic_to_uniform"],2*i+j) -%}
+                    {%- do replace_item(table_name,["(SELECT * FROM dynamic_to_uniform()) AS ", var("dict_shortcut")[list[0]]]|join(""),2*i+j) -%}
+                    {%- do replace_item(alias,var("dict_shortcut")[list[0]],2*i+j) -%}
+                {%- elif list[0] == "h3_to_children" -%}
+                    {%- do replace_item(table_name,["h3_to_children(",list[1],".hex_id::h3index,",list[2],") AS ",var("dict_shortcut")[list[0]]]|join(""),2*i+j) -%}
+                    {%- do replace_item(alias,var("dict_shortcut")[list[0]],2*i+j) -%}
                 {%- endif -%}
         {%- endif -%}   
     {%- endfor -%}  
 {%- endfor -%}
 
-{%- if set_alias -%}({%- endif -%}SELECT
+{%- if mode == "cte" -%}{{name_of_the_table}} AS ({%- elif mode == "alias" -%}({%- endif -%}SELECT
 {#- Attributs -#}
 {%- for key, value in dict_attributs.items() -%}
     {%- for attribut in value -%}
@@ -60,9 +63,15 @@
 
 {#- Jointures -#}
 {%- for i in range((table_name|length)//2) %}
+    {%- set type_jointure = "JOIN" %}
+    {%- if joint_value[2*i][0]=="!" -%}
+        {%- set type_jointure = "LEFT JOIN" -%}
+    {%- elif joint_value[2*i+1][0]=="!" -%}
+        {%- set type_jointure = "RIGHT JOIN" -%}
+    {%- endif -%}
     {%- if loop.first %}
-    FROM {% if table_name[2*i][0] != "(" %}{{schema}}.{%- endif %}{{table_name[2*i]}} 
-        JOIN {% if table_name[2*i+1][0] != "(" %}{{schema}}.{%- endif %}{{table_name[2*i+1]}} {{on_statement(2*i,2*i+1,var("sep"),table_name,alias,joint_value)}}
+    FROM {{table_name[2*i]}} 
+        {{type_jointure}} {{table_name[2*i+1]}} {{on_statement(2*i,2*i+1,var("sep"),table_name,alias,joint_value)}}
     {%- else %}
         {%- if table_name[2*i] not in table_name[:2*i] %}
             {%- set a = 2*i %}
@@ -71,7 +80,7 @@
             {%- set a = 2*i+1 %}
             {%- set b = 2*i %}
         {%- endif %} 
-        JOIN {% if table_name[a][0] != "(" %}{{schema}}.{%- endif %}{{table_name[a]}} {{on_statement(a,b,var("sep"),table_name,alias,joint_value)}}
+        {{type_jointure}} {{table_name[a]}} {{on_statement(a,b,var("sep"),table_name,alias,joint_value)}}
     {%- endif %}
 {%- endfor %}
 
@@ -79,7 +88,12 @@
 {%- if groupby|length %}
     GROUP BY 
     {%- for i in range(groupby|length) %}
-        {{groupby[i]}}
+        {%- set groupby_i = groupby[i] -%}
+        {%- if var("sep") in groupby_i -%}
+            {%- set attribut =  groupby_i.split(".") -%}
+            {%- set groupby_i = fonctions(attribut[2], var("sep"), attribut[0]+"."+attribut[1], table_name, alias, as_statement=false) -%}
+        {%- endif %}
+        {{groupby_i}}
         {%- if not loop.last %}, {% endif %}
     {%- endfor %}
 {%- endif %}
@@ -88,15 +102,20 @@
 {%- if orderby|length %}
     ORDER BY 
     {%- for i in range(orderby|length) %}
-        {{orderby[i]}}
+        {%- set orderby_i = orderby[i] -%}
+        {%- if var("sep") in orderby_i -%}
+            {%- set attribut =  orderby_i.split(".") -%}
+            {%- set orderby_i = fonctions(attribut[2], var("sep"), attribut[0]+"."+attribut[1], table_name, alias, as_statement=false) -%}
+        {%- endif %}
+        {{orderby_i}}
         {%- if not loop.last %}, {% endif %}
     {%- endfor %}
-{%- endif -%}{%- if set_alias -%}) AS {{alias_of_the_table}}{% else %}{%- endif -%}
+{%- endif -%}{%- if mode == "alias" -%}) AS {{name_of_the_table}}{% elif mode == "cte" %}){%- endif -%}
 
 {#- Index -#}
-{%- set index_hook = ["CREATE INDEX IF NOT EXISTS ix_",schema,"_",name_of_the_table,"_hex_id_",granularite,
-    " ON ",schema,".",name_of_the_table," USING btree
-    (hex_id_",granularite,' COLLATE pg_catalog."default" ASC NULLS LAST)
+{%- set index_hook = ["CREATE INDEX IF NOT EXISTS ix_",schema,"_",name_of_the_table,"_hex_id ON ",
+    schema,".",name_of_the_table,' USING btree
+    (hex_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;']|join("") -%}
 
 {# ESRI #}

@@ -1,10 +1,7 @@
-{%- set dict_attributs = {"faits_feux_13":["hex_id AS hex_id_8", "objectid", "area+hex_id+surface", "province", "commune"], "dim_date":["year AS annee"], "dm_mos2014_7_12_bis":[ "l_2014_n1 AS classe"]} -%}
-{%- set list_jointures = [{"faits_feux_13":"begdate","dim_date":"date_id"},{"faits_feux_13":"hex_id","dynamic_to_uniform+":"hex_id_src"},{"dynamic_to_uniform+":"hex_id_tar","dm_mos2014_7_12_bis":"hex_id"}] -%}
+{%- set dict_tab = [{"nom":"bilbo.faits_feux_13","statut":"indicateur","attributs":["date+begdate+!?year+annee", "array_agg+objectid+objectid", "array_length_agg+objectid+nb_feux", "sum_area_agg+hex_id+surface", "min_init_cap_agg+province+province", "min_init_cap_agg+commune+commune"]},{"nom":"bilbo.dm_mos2014_7_12_bis","statut":"context","attributs":["array_agg+l_2014_n1+classe"]}] -%}
+{%- set tab_mask = "bilbo.dim_communes_8" -%}
 {%- set name_of_the_table = "join" -%}
-{%- set alias_of_the_table = "tab" -%}
-{%- set granularite = 8 -%}
-{%- set set_alias = false -%}
-{%- set set_index = true -%}
-{%- set set_esri_requirements = true -%}
+{%- set set_index = false -%}
+{%- set set_esri_requirements = false -%}
 
-{{select_statement(dict_attributs, list_jointures, name_of_the_table, alias_of_the_table, granularite, set_alias, set_index, set_esri_requirements)}}
+{{dtm(dict_tab,tab_mask,name_of_the_table,set_index=false,set_esri_requirements=false)}}

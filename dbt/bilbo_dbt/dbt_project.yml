@@ -29,9 +29,11 @@ clean-targets:         # directories to be removed by `dbt clean`
 # using the `{{ config(...) }}` macro.
 models:
   bilbo_dbt:
-    +materialized: table
+    +materialized: view
 
 # Define variables here
 vars:
   sep: "+"
-  dict_shortcut: {"dynamic_to_uniform":"dtu"}
+  dict_shortcut: {"dynamic_to_uniform":"dtu", "h3_to_children":"children"}
+  nom_tab_date: "bilbo.dim_date"
+  schema_link_table: "bilbo"
