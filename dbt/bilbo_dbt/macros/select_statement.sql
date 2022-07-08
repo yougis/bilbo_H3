@@ -1,4 +1,4 @@
-{%- macro select_statement(dict_attributs, list_jointures, name_of_the_table="my_tab", mode="tab", set_index=false, set_esri_requirements=false) -%}
+{%- macro select_statement(dict_attributs, list_jointures=[], name_of_the_table="my_tab", mode="tab", set_index=false, set_esri_requirements=false) -%}
 {%- set ns = namespace() -%}
 {%- set table_name = [] -%}
 {%- set alias = [] -%}

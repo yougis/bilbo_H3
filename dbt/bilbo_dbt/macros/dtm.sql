@@ -1,4 +1,5 @@
-{%- macro dtm(dict_tab,tab_mask,name_of_the_table,set_index=false,set_esri_requirements=false) -%}
+{%- macro dtm(dict_tab,tab_mask,name_of_the_table,json_agg={},set_index=false,set_esri_requirements=false) -%}
+{%- set ns = namespace() -%}
    
 {%- set result_mask = run_query("SELECT h3_get_resolution(hex_id::h3index) FROM " + tab_mask + " LIMIT 1") -%}
 {%- if execute -%}
@@ -77,11 +78,46 @@
     {%- do list_jointures.append({dict_tab[ix_ind]["nom"]:"hex_id",tab_link:"hex_id_src"}) -%}
     {%- do list_jointures.append({tab_link:"!hex_id_tar",dict_tab[ix_con]["nom"]:"hex_id"}) -%}
 
-    WITH {{select_statement(dict_attributs=dict_attributs, list_jointures=list_jointures, name_of_the_table="t1", mode="cte")}}
+    WITH {{select_statement(dict_attributs=dict_attributs, list_jointures=list_jointures, name_of_the_table="t1", mode="cte")}}{%- if json_agg|length -%},{%- endif -%}
 
+    {%- if json_agg|length -%}
+        {%- set keys = [] -%}
+        {%- set list_attributs = [] -%}
+        {%- set groupby = [] -%}
+        {%- for key in json_agg.items() -%}
+            {%- do keys.append(key) -%}
+        {%- endfor -%}
+        {%- for tab in dict_tab.items() -%}
+            {%- for attribut in tab["attributs"].items() -%}
+                {%- set split = attribut.split(var("sep")) -%}
+                {%- do list_attributs.append(split[split|length-1]) -%}
+                {%- if "!" in attribut -%}
+                    {%- do groupby.append(split[split|length-1]) -%}
+                {% endif %}
+            {%- endfor -%}
+        {%- endfor -%}
+
+    t2 AS (SELECT  
+        {%- for i in range(list_attributs|length) %}
+            {%- if list_attributs[i] not in json_agg[keys[0]] -%}
+                {{list_attributs[i]}}
+                {%- if not loop.last %}, {% endif %}
+            {% endif %}
+        {%- endfor %}, 
+        JSON_AGG(json_build_object({%- for key, value in ns.dict.items() -%}key,value{%- if not loop.last %},{% endif %}{%- endfor %})) AS ns.alias
+        FROM t1
+        GROUP BY 
+        {%- for i in range(groupby|length) %}
+            {%- if groupby[i] not in json_agg[keys[0]] -%}
+                {{groupby[i]}}
+                {%- if not loop.last %}, {% endif %}
+            {% endif %}
+        {%- endfor %})
+SELECT *, h3_to_geo_boundary(hex_id::h3index)::geometry AS geometry FROM t2
+    {%- else -%}   
 SELECT *, h3_to_geo_boundary(hex_id::h3index)::geometry AS geometry FROM t1
+    {%- endif -%}  
 {%- endif -%}
-
 
 {#- Index -#}
 {%- set index_hook = ["CREATE INDEX IF NOT EXISTS ix_",schema,"_",name_of_the_table,"_hex_id ON ",
