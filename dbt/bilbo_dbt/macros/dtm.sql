@@ -1,4 +1,4 @@
-{%- macro dtm(dict_tab,tab_mask,name_of_the_table,json_agg={},set_index=false,set_esri_requirements=false) -%}
+{%- macro dtm(list_tab,tab_mask,name_of_the_table,json_agg={},set_index=false,set_esri_requirements=false) -%}
 {%- set ns = namespace() -%}
    
 {%- set result_mask = run_query("SELECT h3_get_resolution(hex_id::h3index) FROM " + tab_mask + " LIMIT 1") -%}
@@ -12,8 +12,8 @@
 {%- set date_attributs = [] -%}
 {%- set date_jointures = [] -%}
 
-{%- set statut0 = dict_tab[0]["statut"] -%}
-{%- set statut1 = dict_tab[1]["statut"] -%}
+{%- set statut0 = list_tab[0]["statut"] -%}
+{%- set statut1 = list_tab[1]["statut"] -%}
 
 {%- if (statut0 == "indicateur" and statut1 == "indicateur") -%}
 
@@ -27,11 +27,11 @@
         {%- set ix_con = 0 -%}
     {%- endif -%}
 
-    {%- set tab_link = var("schema_link_table")+".link_"+dict_tab[ix_ind]["nom"].split(".")[1]+"_"+dict_tab[ix_con]["nom"].split(".")[1] -%}
+    {%- set tab_link = var("schema_link_table")+".link_"+list_tab[ix_ind]["nom"].split(".")[1]+"_"+list_tab[ix_con]["nom"].split(".")[1] -%}
     {%- set dict_attributs = {} -%}
     {%- set list_jointures = [] -%}
 
-    {%- set result_ind = run_query("SELECT MIN(h3_get_resolution(hex_id::h3index)), MAX(h3_get_resolution(hex_id::h3index)) FROM " + dict_tab[ix_ind]["nom"]) -%}
+    {%- set result_ind = run_query("SELECT MIN(h3_get_resolution(hex_id::h3index)), MAX(h3_get_resolution(hex_id::h3index)) FROM " + list_tab[ix_ind]["nom"]) -%}
     {%- if execute -%}
         {%- set res_min_ind = result_ind.columns[0].values()[0] -%}
         {%- set res_max_ind = result_ind.columns[1].values()[0] -%}
@@ -40,9 +40,9 @@
         {% set res_max_ind = 0 -%}
     {%- endif -%}
 
-    {%- for tab in dict_tab -%}
+    {%- for tab in list_tab -%}
         {%- set list_attributs = [] -%}
-        {%- if tab["nom"] == dict_tab[ix_ind]["nom"] -%}
+        {%- if tab["nom"] == list_tab[ix_ind]["nom"] -%}
             {%- if res_max_ind < res_mask -%}
                 {%- do list_attributs.append(['!hex_id_children',var("sep"),res_mask]|join("")) -%}
             {%- elif  res_min_ind >= res_mask -%}  
@@ -73,10 +73,10 @@
         {%- endfor -%} 
     {%- endif -%}  
     {%- if res_min_ind < res_mask -%}
-        {%- do list_jointures.append({dict_tab[ix_ind]["nom"]:"!", ["h3_to_children",var("sep"),dict_tab[ix_ind]["nom"],var("sep"),res_mask]|join(""):""}) -%} 
+        {%- do list_jointures.append({list_tab[ix_ind]["nom"]:"!", ["h3_to_children",var("sep"),list_tab[ix_ind]["nom"],var("sep"),res_mask]|join(""):""}) -%} 
     {%- endif -%}  
-    {%- do list_jointures.append({dict_tab[ix_ind]["nom"]:"hex_id",tab_link:"hex_id_src"}) -%}
-    {%- do list_jointures.append({tab_link:"!hex_id_tar",dict_tab[ix_con]["nom"]:"hex_id"}) -%}
+    {%- do list_jointures.append({list_tab[ix_ind]["nom"]:"hex_id",tab_link:"hex_id_src"}) -%}
+    {%- do list_jointures.append({tab_link:"!hex_id_tar",list_tab[ix_con]["nom"]:"hex_id"}) -%}
 
     WITH {{select_statement(dict_attributs=dict_attributs, list_jointures=list_jointures, name_of_the_table="t1", mode="cte")}}{%- if json_agg|length -%},{%- endif -%}
 
@@ -84,35 +84,42 @@
         {%- set keys = [] -%}
         {%- set list_attributs = [] -%}
         {%- set groupby = [] -%}
-        {%- for key in json_agg.items() -%}
+        {%- for key, value in json_agg.items() -%}
             {%- do keys.append(key) -%}
         {%- endfor -%}
-        {%- for tab in dict_tab.items() -%}
-            {%- for attribut in tab["attributs"].items() -%}
+        {%- for tab in list_tab -%}
+            {%- for attribut in tab["attributs"] -%}
                 {%- set split = attribut.split(var("sep")) -%}
                 {%- do list_attributs.append(split[split|length-1]) -%}
                 {%- if "!" in attribut -%}
                     {%- do groupby.append(split[split|length-1]) -%}
                 {% endif %}
             {%- endfor -%}
-        {%- endfor -%}
+        {%- endfor %}
 
-    t2 AS (SELECT  
-        {%- for i in range(list_attributs|length) %}
-            {%- if list_attributs[i] not in json_agg[keys[0]] -%}
-                {{list_attributs[i]}}
-                {%- if not loop.last %}, {% endif %}
-            {% endif %}
-        {%- endfor %}, 
-        JSON_AGG(json_build_object({%- for key, value in ns.dict.items() -%}key,value{%- if not loop.last %},{% endif %}{%- endfor %})) AS ns.alias
-        FROM t1
-        GROUP BY 
-        {%- for i in range(groupby|length) %}
+    t2 AS ({{"SELECT hex_id, "}}
+        {%- set list = [] -%}
+        {%- for i in range(groupby|length) -%}
             {%- if groupby[i] not in json_agg[keys[0]] -%}
-                {{groupby[i]}}
-                {%- if not loop.last %}, {% endif %}
-            {% endif %}
+                {%- do list.append(groupby[i]) -%}
+            {%- endif -%}
+        {%- endfor %}
+        {%- for i in range(list|length) -%}
+            {{list[i]}}{{", "}}
+        {%- endfor %}
+        JSON_AGG(json_build_object({%- for key in json_agg[keys[0]] -%}{{key}}, {{json_agg[keys[0]][key]}}{%- if not loop.last %}, {% endif -%}{%- endfor -%})) AS {{keys[0]}}
+        FROM t1
+        {{"GROUP BY hex_id, "}}
+        {%- set list = [] -%}
+        {%- for i in range(groupby|length) -%}
+            {%- if groupby[i] not in json_agg[keys[0]] -%}
+                {%- do list.append(groupby[i]) -%}
+            {%- endif -%}
+        {%- endfor %}
+        {%- for i in range(list|length) -%}
+            {{list[i]}}{%- if not loop.last -%}{{", "}}{%- endif -%}
         {%- endfor %})
+
 SELECT *, h3_to_geo_boundary(hex_id::h3index)::geometry AS geometry FROM t2
     {%- else -%}   
 SELECT *, h3_to_geo_boundary(hex_id::h3index)::geometry AS geometry FROM t1
