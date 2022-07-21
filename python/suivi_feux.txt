@@ -1,0 +1,44 @@
+2022-07-21 16:25:36.346578 (compact_dask)
+nom: bilbo.faits_feux_nc_6a13
+nb_cluster: 10 | res: 6-13
+Cluster 1
+   --- 550405 objets ---
+   --- 1306.6 secs ---
+Cluster 2
+   --- 402514 objets ---
+   --- 251.39 secs ---
+Cluster 3
+   --- 415968 objets ---
+   --- 961.87 secs ---
+Cluster 4
+   --- 364524 objets ---
+   --- 343.9 secs ---
+Cluster 5
+   --- 393191 objets ---
+   --- 384.06 secs ---
+Cluster 6
+   --- 426017 objets ---
+   --- 391.58 secs ---
+Cluster 7
+   --- 319945 objets ---
+   --- 201.97 secs ---
+Cluster 8
+   --- 384597 objets ---
+   --- 298.88 secs ---
+Cluster 9
+   --- 383472 objets ---
+   --- 796.2 secs ---
+Cluster 10
+   --- 511385 objets ---
+   --- 1347.48 secs ---
+
+2022-07-22 08:19:53.416948 (compact_dask)
+nom: bilbo.faits_feux_idp_6a13
+nb_cluster: 2 | res: 6-13
+Cluster 1
+   --- 4255 objets ---
+   --- 4.54 secs ---
+Cluster 2
+   --- 8937 objets ---
+   --- 12.88 secs ---
+
