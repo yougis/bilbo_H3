@@ -34,6 +34,6 @@ models:
 # Define variables here
 vars:
   sep: "+"
-  dict_shortcut: {"dynamic_to_uniform":"dtu", "h3_to_children":"children"}
+  dict_shortcut: {"jointure_adaptative":"link_table", "h3_to_children":"children"}
   nom_tab_date: "bilbo.dim_date"
   schema_link_table: "bilbo"

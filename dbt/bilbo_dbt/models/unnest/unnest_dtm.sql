@@ -1,0 +1,1 @@
+{{unnest("bilbo.dm_feux_mos_nc_annee_8_v6", "classe_n3", {"idfeu":"int", "classe":"text", "surface":"double precision"})}}

@@ -1,0 +1,781 @@
+2022-07-22 09:32:17.591450 (compact_dask_partition)
+nom: bilbo.test_grande_echelle_mos
+nb_cluster: 200 | npartitions: 8 | colonne: l_2014_n3 | res: 6-13
+Cluster 19
+   --- 624070 objets ---
+   --- 298.09 secs ---
+Cluster 20
+   --- 317010 objets ---
+   --- 110.26 secs ---
+Cluster 21
+   --- 377235 objets ---
+   --- 147.09 secs ---
+Cluster 22
+   --- 515668 objets ---
+   --- 208.71 secs ---
+Cluster 23
+   --- 296140 objets ---
+   --- 115.0 secs ---
+Cluster 24
+   --- 379872 objets ---
+   --- 176.06 secs ---
+Cluster 25
+   --- 322545 objets ---
+   --- 160.04 secs ---
+Cluster 26
+   --- 357861 objets ---
+   --- 143.45 secs ---
+Cluster 27
+   --- 282371 objets ---
+   --- 140.64 secs ---
+Cluster 28
+   --- 498532 objets ---
+   --- 189.03 secs ---
+2022-07-22 10:01:19.039324 (compact_dask_partition)
+nom: bilbo.test_grande_echelle_mos
+nb_cluster: 200 | npartitions: 8 | colonne: l_2014_n3 | res: 6-13
+Cluster 29
+   --- 123157 objets ---
+   --- 69.86 secs ---
+Cluster 30
+   --- 431740 objets ---
+   --- 207.61 secs ---
+Cluster 31
+   --- 149160 objets ---
+   --- 66.78 secs ---
+Cluster 32
+   --- 396506 objets ---
+   --- 162.77 secs ---
+Cluster 33
+   --- 325679 objets ---
+   --- 126.64 secs ---
+Cluster 34
+   --- 361289 objets ---
+   --- 182.92 secs ---
+Cluster 35
+   --- 283988 objets ---
+   --- 108.83 secs ---
+Cluster 36
+   --- 527907 objets ---
+   --- 254.08 secs ---
+Cluster 37
+   --- 291902 objets ---
+   --- 130.67 secs ---
+Cluster 38
+   --- 364683 objets ---
+   --- 166.28 secs ---
+Cluster 39
+   --- 411385 objets ---
+   --- 165.79 secs ---
+Cluster 40
+   --- 319247 objets ---
+   --- 118.39 secs ---
+Cluster 41
+   --- 241503 objets ---
+   --- 95.58 secs ---
+Cluster 42
+   --- 335814 objets ---
+   --- 117.16 secs ---
+Cluster 43
+   --- 264589 objets ---
+   --- 109.26 secs ---
+Cluster 44
+   --- 159890 objets ---
+   --- 66.59 secs ---
+Cluster 45
+   --- 571834 objets ---
+   --- 283.6 secs ---
+Cluster 46
+   --- 263993 objets ---
+   --- 96.36 secs ---
+Cluster 47
+   --- 275450 objets ---
+   --- 124.62 secs ---
+Cluster 48
+   --- 389763 objets ---
+   --- 189.93 secs ---
+Cluster 49
+   --- 379430 objets ---
+   --- 173.69 secs ---
+Cluster 50
+   --- 428745 objets ---
+   --- 200.28 secs ---
+Cluster 51
+   --- 557111 objets ---
+   --- 298.24 secs ---
+Cluster 52
+   --- 239677 objets ---
+   --- 88.69 secs ---
+Cluster 53
+   --- 401178 objets ---
+   --- 194.33 secs ---
+Cluster 54
+   --- 287251 objets ---
+   --- 128.89 secs ---
+Cluster 55
+   --- 470074 objets ---
+   --- 181.35 secs ---
+Cluster 56
+   --- 469743 objets ---
+   --- 178.99 secs ---
+Cluster 57
+   --- 560914 objets ---
+   --- 268.72 secs ---
+Cluster 58
+   --- 376275 objets ---
+   --- 144.35 secs ---
+Cluster 59
+   --- 462302 objets ---
+   --- 189.88 secs ---
+Cluster 60
+   --- 386739 objets ---
+   --- 172.64 secs ---
+Cluster 61
+   --- 184159 objets ---
+   --- 66.77 secs ---
+Cluster 62
+   --- 458746 objets ---
+   --- 183.75 secs ---
+Cluster 63
+   --- 512012 objets ---
+   --- 211.78 secs ---
+Cluster 64
+   --- 398190 objets ---
+   --- 164.36 secs ---
+Cluster 65
+   --- 384974 objets ---
+   --- 165.14 secs ---
+Cluster 66
+   --- 306733 objets ---
+   --- 123.81 secs ---
+Cluster 67
+   --- 410871 objets ---
+   --- 156.81 secs ---
+Cluster 68
+   --- 460297 objets ---
+   --- 184.78 secs ---
+Cluster 69
+   --- 291445 objets ---
+   --- 118.17 secs ---
+Cluster 70
+   --- 560656 objets ---
+   --- 286.18 secs ---
+Cluster 71
+   --- 391862 objets ---
+   --- 155.18 secs ---
+Cluster 72
+   --- 392697 objets ---
+   --- 196.08 secs ---
+Cluster 73
+   --- 441687 objets ---
+   --- 178.43 secs ---
+Cluster 74
+   --- 306661 objets ---
+   --- 154.11 secs ---
+Cluster 75
+   --- 422061 objets ---
+   --- 202.15 secs ---
+Cluster 76
+   --- 565406 objets ---
+   --- 245.2 secs ---
+Cluster 77
+   --- 305841 objets ---
+   --- 133.81 secs ---
+Cluster 78
+   --- 360330 objets ---
+   --- 154.53 secs ---
+Cluster 79
+   --- 266242 objets ---
+   --- 109.18 secs ---
+Cluster 80
+   --- 286267 objets ---
+   --- 121.35 secs ---
+Cluster 81
+   --- 223192 objets ---
+   --- 83.18 secs ---
+Cluster 82
+   --- 448095 objets ---
+   --- 180.7 secs ---
+Cluster 83
+   --- 492118 objets ---
+   --- 274.03 secs ---
+Cluster 84
+   --- 264998 objets ---
+   --- 96.51 secs ---
+Cluster 85
+   --- 415088 objets ---
+   --- 177.91 secs ---
+Cluster 86
+   --- 324572 objets ---
+   --- 138.57 secs ---
+Cluster 87
+   --- 451511 objets ---
+   --- 189.35 secs ---
+Cluster 88
+   --- 340403 objets ---
+   --- 169.24 secs ---
+Cluster 89
+   --- 401755 objets ---
+   --- 183.64 secs ---
+Cluster 90
+   --- 305566 objets ---
+   --- 136.17 secs ---
+Cluster 91
+   --- 515489 objets ---
+   --- 229.17 secs ---
+Cluster 92
+   --- 259996 objets ---
+   --- 108.14 secs ---
+Cluster 93
+   --- 610048 objets ---
+   --- 306.08 secs ---
+Cluster 94
+   --- 336193 objets ---
+   --- 172.26 secs ---
+Cluster 95
+   --- 336918 objets ---
+   --- 159.05 secs ---
+Cluster 96
+   --- 289157 objets ---
+   --- 220.38 secs ---
+Cluster 97
+   --- 434955 objets ---
+   --- 193.96 secs ---
+Cluster 98
+   --- 397648 objets ---
+   --- 170.96 secs ---
+Cluster 99
+   --- 147611 objets ---
+   --- 56.48 secs ---
+Cluster 100
+   --- 416536 objets ---
+   --- 184.17 secs ---
+Cluster 101
+   --- 313557 objets ---
+   --- 110.12 secs ---
+Cluster 102
+   --- 450836 objets ---
+   --- 228.64 secs ---
+Cluster 103
+   --- 346551 objets ---
+   --- 161.12 secs ---
+Cluster 104
+   --- 462077 objets ---
+   --- 229.06 secs ---
+Cluster 105
+   --- 357218 objets ---
+   --- 149.46 secs ---
+Cluster 106
+   --- 575205 objets ---
+   --- 240.42 secs ---
+Cluster 107
+   --- 313659 objets ---
+   --- 137.83 secs ---
+Cluster 108
+   --- 17939 objets ---
+   --- 13.33 secs ---
+Cluster 109
+   --- 268724 objets ---
+   --- 138.72 secs ---
+Cluster 110
+   --- 479902 objets ---
+   --- 226.4 secs ---
+Cluster 111
+   --- 295468 objets ---
+   --- 121.76 secs ---
+Cluster 112
+   --- 515801 objets ---
+   --- 216.79 secs ---
+Cluster 113
+   --- 30546 objets ---
+   --- 12.59 secs ---
+Cluster 114
+   --- 380294 objets ---
+   --- 224.77 secs ---
+Cluster 115
+   --- 144443 objets ---
+   --- 52.02 secs ---
+Cluster 116
+   --- 498487 objets ---
+   --- 274.67 secs ---
+Cluster 117
+   --- 326008 objets ---
+   --- 146.63 secs ---
+Cluster 118
+   --- 239961 objets ---
+   --- 89.87 secs ---
+Cluster 119
+   --- 457185 objets ---
+   --- 222.71 secs ---
+Cluster 120
+   --- 538129 objets ---
+   --- 224.66 secs ---
+Cluster 121
+   --- 269815 objets ---
+   --- 107.82 secs ---
+Cluster 122
+   --- 358584 objets ---
+   --- 166.78 secs ---
+Cluster 123
+   --- 364786 objets ---
+   --- 136.2 secs ---
+Cluster 124
+   --- 272858 objets ---
+   --- 117.09 secs ---
+Cluster 125
+   --- 400200 objets ---
+   --- 187.71 secs ---
+Cluster 126
+   --- 367611 objets ---
+   --- 168.17 secs ---
+Cluster 127
+   --- 423127 objets ---
+   --- 189.49 secs ---
+Cluster 128
+   --- 374127 objets ---
+   --- 153.57 secs ---
+Cluster 129
+   --- 237853 objets ---
+   --- 102.61 secs ---
+Cluster 130
+   --- 341393 objets ---
+   --- 139.29 secs ---
+Cluster 131
+   --- 309183 objets ---
+   --- 131.18 secs ---
+Cluster 132
+   --- 311869 objets ---
+   --- 107.86 secs ---
+Cluster 133
+   --- 194299 objets ---
+   --- 86.1 secs ---
+Cluster 134
+   --- 342667 objets ---
+   --- 137.89 secs ---
+Cluster 135
+   --- 561649 objets ---
+   --- 217.59 secs ---
+Cluster 136
+   --- 257225 objets ---
+   --- 116.4 secs ---
+Cluster 137
+   --- 608444 objets ---
+   --- 256.3 secs ---
+Cluster 138
+   --- 390259 objets ---
+   --- 150.98 secs ---
+Cluster 139
+   --- 536995 objets ---
+   --- 251.12 secs ---
+Cluster 140
+   --- 161337 objets ---
+   --- 55.38 secs ---
+Cluster 141
+   --- 462827 objets ---
+   --- 217.28 secs ---
+Cluster 142
+   --- 526090 objets ---
+   --- 236.12 secs ---
+Cluster 143
+   --- 382850 objets ---
+   --- 158.52 secs ---
+Cluster 144
+   --- 474369 objets ---
+   --- 189.46 secs ---
+Cluster 145
+   --- 378414 objets ---
+   --- 167.82 secs ---
+Cluster 146
+   --- 409731 objets ---
+   --- 196.91 secs ---
+Cluster 147
+   --- 377139 objets ---
+   --- 185.79 secs ---
+Cluster 148
+   --- 504495 objets ---
+   --- 208.36 secs ---
+Cluster 149
+   --- 412731 objets ---
+   --- 172.21 secs ---
+Cluster 150
+   --- 457461 objets ---
+   --- 218.07 secs ---
+Cluster 151
+   --- 347480 objets ---
+   --- 164.35 secs ---
+Cluster 152
+   --- 485462 objets ---
+   --- 215.66 secs ---
+Cluster 153
+   --- 327783 objets ---
+   --- 143.41 secs ---
+Cluster 154
+   --- 496540 objets ---
+   --- 202.6 secs ---
+Cluster 155
+   --- 236594 objets ---
+   --- 117.17 secs ---
+Cluster 156
+   --- 430604 objets ---
+   --- 183.92 secs ---
+Cluster 157
+   --- 303592 objets ---
+   --- 127.41 secs ---
+Cluster 158
+   --- 303736 objets ---
+   --- 108.18 secs ---
+Cluster 159
+   --- 347265 objets ---
+   --- 176.8 secs ---
+Cluster 160
+   --- 558508 objets ---
+   --- 242.24 secs ---
+Cluster 161
+   --- 67879 objets ---
+   --- 23.9 secs ---
+Cluster 162
+   --- 47560 objets ---
+   --- 18.04 secs ---
+Cluster 163
+   --- 17608 objets ---
+   --- 7.56 secs ---
+Cluster 164
+   --- 107186 objets ---
+   --- 42.45 secs ---
+Cluster 165
+   --- 139720 objets ---
+   --- 47.28 secs ---
+Cluster 166
+   --- 91628 objets ---
+   --- 32.64 secs ---
+Cluster 167
+   --- 222400 objets ---
+   --- 80.33 secs ---
+Cluster 168
+   --- 97657 objets ---
+   --- 30.59 secs ---
+2022-07-22 16:07:36.543822 (compact_dask_partition)
+nom: bilbo.test_grande_echelle_mos
+nb_cluster: 200 | npartitions: 8 | colonne: l_2014_n3 | res: 6-13
+2022-07-22 16:08:38.122843 (compact_dask_partition)
+nom: bilbo.test_grande_echelle_mos
+nb_cluster: 200 | npartitions: 8 | colonne: l_2014_n3 | res: 6-13
+2022-07-22 16:08:56.973437 (compact_dask_partition)
+nom: bilbo.test_grande_echelle_mos
+nb_cluster: 200 | npartitions: 8 | colonne: l_2014_n3 | res: 6-13
+2022-07-22 16:09:09.286189 (compact_dask_partition)
+nom: bilbo.test_grande_echelle_mos
+nb_cluster: 200 | npartitions: 1 | colonne: l_2014_n3 | res: 6-13
+2022-07-22 16:09:37.761013 (compact_dask_partition)
+nom: bilbo.test_grande_echelle_mos
+nb_cluster: 200 | npartitions: 8 | colonne: l_2014_n3 | res: 6-13
+2022-07-22 16:09:43.865601 (compact_dask_partition)
+nom: bilbo.test_grande_echelle_mos
+nb_cluster: 200 | npartitions: 4 | colonne: l_2014_n3 | res: 6-13
+2022-07-22 16:09:50.070820 (compact_dask_partition)
+nom: bilbo.test_grande_echelle_mos
+nb_cluster: 200 | npartitions: 2 | colonne: l_2014_n3 | res: 6-13
+Cluster 169
+   --- 81993 objets ---
+   --- 62.97 secs ---
+Cluster 170
+   --- 61726 objets ---
+   --- 41.77 secs ---
+Cluster 171
+   --- 130917 objets ---
+   --- 94.32 secs ---
+Cluster 172
+   --- 35770 objets ---
+   --- 24.65 secs ---
+Cluster 173
+   --- 164293 objets ---
+   --- 124.72 secs ---
+Cluster 174
+   --- 30220 objets ---
+   --- 23.7 secs ---
+Cluster 175
+   --- 48710 objets ---
+   --- 34.93 secs ---
+Cluster 176
+   --- 101350 objets ---
+   --- 66.21 secs ---
+Cluster 177
+   --- 151395 objets ---
+   --- 113.2 secs ---
+Cluster 178
+   --- 60362 objets ---
+   --- 35.97 secs ---
+Cluster 179
+   --- 75891 objets ---
+   --- 49.11 secs ---
+Cluster 180
+   --- 62365 objets ---
+   --- 39.95 secs ---
+Cluster 181
+   --- 52286 objets ---
+   --- 34.97 secs ---
+Cluster 182
+   --- 56882 objets ---
+   --- 34.79 secs ---
+Cluster 183
+   --- 39552 objets ---
+   --- 23.3 secs ---
+Cluster 184
+   --- 113525 objets ---
+   --- 78.21 secs ---
+Cluster 185
+   --- 197469 objets ---
+   --- 151.38 secs ---
+Cluster 186
+   --- 85831 objets ---
+   --- 63.91 secs ---
+Cluster 187
+   --- 1644 objets ---
+   --- 2.91 secs ---
+Cluster 188
+   --- 80762 objets ---
+   --- 60.13 secs ---
+Cluster 189
+   --- 17358 objets ---
+   --- 12.95 secs ---
+Cluster 190
+   --- 134578 objets ---
+   --- 90.63 secs ---
+Cluster 191
+   --- 21846 objets ---
+   --- 15.07 secs ---
+Cluster 192
+   --- 97981 objets ---
+   --- 89.4 secs ---
+Cluster 193
+   --- 91496 objets ---
+   --- 81.01 secs ---
+2022-07-22 16:34:48.995770 (compact_dask_partition)
+nom: bilbo.test_grande_echelle_mos
+nb_cluster: 200 | npartitions: 2 | colonne: l_2014_n3 | res: 6-13
+Cluster 194
+   --- 84116 objets ---
+   --- 62.35 secs ---
+Cluster 195
+   --- 117548 objets ---
+   --- 77.94 secs ---
+Cluster 196
+   --- 129001 objets ---
+   --- 111.26 secs ---
+Cluster 197
+   --- 163151 objets ---
+   --- 107.43 secs ---
+Cluster 198
+   --- 24643 objets ---
+   --- 16.56 secs ---
+Cluster 199
+   --- 4518 objets ---
+   --- 4.37 secs ---
+Cluster 200
+   --- 30431 objets ---
+   --- 19.04 secs ---
+
+2022-07-25 08:50:29.470111 (compact_dask_partition)
+nom: bilbo.faits_mos_idp_6a13
+nb_cluster: 3 | npartitions: 16 | colonne: l_2014_n3 | res: 6-13
+Cluster 1
+   --- 95925 objets ---
+   --- 30.5 secs ---
+Cluster 2
+   --- 26774 objets ---
+   --- 11.05 secs ---
+Cluster 3
+   --- 191308 objets ---
+   --- 56.46 secs ---
+
+2022-07-26 12:30:36.931610 (compact_dask_partition)
+nom: bilbo.segmentation_idp
+nb_cluster: 3 | npartitions: 16 | colonne: l_2014_n3 | res: 13-13
+2022-07-26 12:43:03.307397 (compact_dask_partition)
+nom: bilbo.segmentation_idp
+nb_cluster: 10 | npartitions: 16 | colonne: l_2014_n3 | res: 13-13
+2022-08-03 08:49:29.536991 (compact_dask_partition)
+nom: bilbo.test_idp
+nb_cluster: 6 | npartitions: 16 | colonne: l_2014_n3 | res: 6-13
+Cluster 1
+   --- 5366 objets ---
+   --- 6.62 secs ---
+Cluster 2
+   --- 66123 objets ---
+   --- 20.39 secs ---
+Cluster 3
+   --- 48697 objets ---
+   --- 16.42 secs ---
+Cluster 4
+   --- 49232 objets ---
+   --- 16.51 secs ---
+Cluster 5
+   --- 42335 objets ---
+   --- 15.59 secs ---
+Cluster 6
+   --- 102254 objets ---
+   --- 33.17 secs ---
+
+2022-08-03 08:54:27.592237 (compact_dask_partition)
+nom: bilbo.test_idp
+nb_cluster: 6 | npartitions: 16 | colonne: l_2014_n3 | res: 6-13
+Cluster 1
+   --- 5366 objets ---
+   --- 4.36 secs ---
+Cluster 2
+   --- 66123 objets ---
+   --- 20.09 secs ---
+2022-08-03 08:55:01.858629 (compact_dask_partition)
+nom: bilbo.test_idp
+nb_cluster: 6 | npartitions: 16 | colonne: l_2014_n3 | res: 6-13
+Cluster 3
+   --- 48697 objets ---
+   --- 15.62 secs ---
+Cluster 4
+   --- 49232 objets ---
+   --- 15.72 secs ---
+2022-08-03 08:55:38.648747 (compact_dask_partition)
+nom: bilbo.test_idp
+nb_cluster: 6 | npartitions: 16 | colonne: l_2014_n3 | res: 6-13
+Cluster 5
+   --- 42335 objets ---
+   --- 14.8 secs ---
+Cluster 6
+   --- 102254 objets ---
+   --- 37.56 secs ---
+
+2022-08-03 09:02:33.673175 (compact_dask_partition)
+nom: bilbo.test_idp
+nb_cluster: 10 | npartitions: 16 | colonne: l_2014_n3 | res: 6-13
+Cluster 1
+   --- 381871 objets ---
+   --- 129.46 secs ---
+Cluster 2
+   --- 646203 objets ---
+   --- 222.65 secs ---
+2022-08-03 09:08:44.215560 (compact_dask_partition)
+nom: bilbo.test_idp
+nb_cluster: 10 | npartitions: 16 | colonne: l_2014_n3 | res: 6-13
+Cluster 3
+   --- 534238 objets ---
+   --- 225.82 secs ---
+Cluster 4
+   --- 434131 objets ---
+   --- 218.23 secs ---
+2022-08-03 09:16:41.960667 (compact_dask_partition)
+nom: bilbo.test_idp
+nb_cluster: 10 | npartitions: 16 | colonne: l_2014_n3 | res: 6-13
+2022-08-03 09:16:53.881292 (compact_dask_partition)
+nom: bilbo.test_idp
+nb_cluster: 10 | npartitions: 8 | colonne: l_2014_n3 | res: 6-13
+2022-08-03 09:17:04.479643 (compact_dask_partition)
+nom: bilbo.test_idp
+nb_cluster: 10 | npartitions: 2 | colonne: l_2014_n3 | res: 6-13
+Cluster 5
+   --- 168290 objets ---
+   --- 150.04 secs ---
+Cluster 6
+   --- 285903 objets ---
+   --- 327.32 secs ---
+2022-08-03 09:25:20.566885 (compact_dask_partition)
+nom: bilbo.test_idp
+nb_cluster: 10 | npartitions: 16 | colonne: l_2014_n3 | res: 6-13
+Cluster 7
+   --- 318545 objets ---
+   --- 136.34 secs ---
+2022-08-03 09:27:54.725930 (compact_dask_partition)
+nom: bilbo.test_idp
+nb_cluster: 10 | npartitions: 4 | colonne: l_2014_n3 | res: 6-13
+Cluster 8
+   --- 158680 objets ---
+   --- 410.02 secs ---
+2022-08-03 09:39:19.519749 (compact_dask_partition)
+nom: bilbo.test_idp
+nb_cluster: 10 | npartitions: 16 | colonne: l_2014_n3 | res: 6-13
+Cluster 9
+   --- 344991 objets ---
+   --- 118.96 secs ---
+Cluster 10
+   --- 222566 objets ---
+   --- 91.74 secs ---
+
+2022-08-03 10:03:50.123576 (compact_dask_partition)
+nom: bilbo.dim_communes_8_v2
+nb_cluster: 10 | npartitions: 16 | colonne: l_2014_n3 | res: 8-8
+2022-08-03 10:06:08.993544 (compact_dask)
+nom: bilbo.dim_communes_8_v2
+nb_cluster: 10 | res: 8-8
+Cluster 1
+   --- 1992 objets ---
+   --- 41.42 secs ---
+Cluster 2
+   --- 1366 objets ---
+   --- 14.53 secs ---
+Cluster 3
+   --- 2836 objets ---
+   --- 22.0 secs ---
+Cluster 4
+   --- 2487 objets ---
+   --- 9.78 secs ---
+Cluster 5
+   --- 2411 objets ---
+   --- 37.63 secs ---
+Cluster 6
+   --- 861 objets ---
+   --- 10.18 secs ---
+Cluster 7
+   --- 3613 objets ---
+   --- 12.55 secs ---
+Cluster 8
+   --- 2546 objets ---
+   --- 14.7 secs ---
+Cluster 9
+   --- 2535 objets ---
+   --- 11.11 secs ---
+Cluster 10
+   --- 2791 objets ---
+   --- 25.2 secs ---
+
+2022-08-03 10:17:20.065384 (compact_dask_partition)
+nom: bilbo.dim_communes_8_v2
+nb_cluster: 10 | npartitions: 16 | colonne: nom | res: 8-8
+Cluster 1
+   --- 2222 objets ---
+   --- 4.47 secs ---
+Cluster 2
+   --- 2395 objets ---
+   --- 4.57 secs ---
+2022-08-03 10:17:55.904432 (compact_dask_partition)
+nom: bilbo.dim_communes_8_v2
+nb_cluster: 10 | npartitions: 16 | colonne: nom | res: 8-8
+Cluster 1
+   --- 2222 objets ---
+   --- 4.67 secs ---
+Cluster 2
+   --- 2395 objets ---
+   --- 4.21 secs ---
+Cluster 3
+   --- 2392 objets ---
+   --- 4.41 secs ---
+Cluster 4
+   --- 2409 objets ---
+   --- 4.49 secs ---
+Cluster 5
+   --- 2423 objets ---
+   --- 3.99 secs ---
+Cluster 6
+   --- 2403 objets ---
+   --- 4.5 secs ---
+Cluster 7
+   --- 2399 objets ---
+   --- 4.72 secs ---
+Cluster 8
+   --- 2415 objets ---
+   --- 4.33 secs ---
+Cluster 9
+   --- 2103 objets ---
+   --- 4.86 secs ---
+Cluster 10
+   --- 2293 objets ---
+   --- 2.18 secs ---
+

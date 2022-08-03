@@ -27,9 +27,9 @@
      {%- for j in range(2) -%}
         {%- if var("sep") in table_name[2*i+j] -%}
             {%- set list = table_name[2*i+j].split(var("sep")) -%}
-                {%- if list[0] == "dynamic_to_uniform" -%}
-                    {%- do replace_item(table_name,["(SELECT * FROM dynamic_to_uniform()) AS ", var("dict_shortcut")[list[0]]]|join(""),2*i+j) -%}
-                    {%- do replace_item(alias,var("dict_shortcut")[list[0]],2*i+j) -%}
+                {%- if list[0] == "jointure_adaptative" -%}
+                    {%- do replace_item(table_name,["(SELECT * FROM bilbo.jointure_adaptative('", list[1], "','", list[2], "',", list[3], ",", list[4], ")) AS ", list[5]]|join(""),2*i+j) -%}
+                    {%- do replace_item(alias,list[5],2*i+j) -%}
                 {%- elif list[0] == "h3_to_children" -%}
                     {%- do replace_item(table_name,["h3_to_children(",list[1],".hex_id::h3index,",list[2],") AS ",var("dict_shortcut")[list[0]]]|join(""),2*i+j) -%}
                     {%- do replace_item(alias,var("dict_shortcut")[list[0]],2*i+j) -%}
