@@ -1,4 +1,5 @@
 {%- macro dtm(list_tab,name_of_the_table='table',res=8,json_agg={},set_index=false,set_esri_requirements=false) -%}
+{{config(materialized="table", alias=name_of_the_table)}}
 
 {%- set ns = namespace() -%}
 
@@ -96,7 +97,7 @@
                 {%- elif list[0] == '!date' -%}
                     {%- do date_attributs.append("!"+list[2]+" AS "+list[3])-%}
                     {%- do date_jointures.append({tab["nom"]:"!"+list[1],var("nom_tab_date"):"date_id"})-%}
-                {%- elif "sum_area_adaptatif_agg" in list[0] -%}
+                {%- elif "sum_area_adaptatif" in list[0] -%}
                     {%- for idx in ix_con -%}
                         {%- set ns.str = ns.str + list_tab[idx]["nom"] + ".hex_id+" -%}
                     {%- endfor -%}
@@ -234,5 +235,3 @@ ALTER TABLE IF EXISTS ",schema,".",name_of_the_table,"
 {%- endif -%}
 
 {%- endmacro -%}
-
-{{config(materialized="table", alias=name_of_the_table)}}
