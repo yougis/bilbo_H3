@@ -12,7 +12,7 @@ SELECT
     {%- for attribut in col_names -%}
     {%- if attribut != field -%}
     {%- if true %}
-    {{attribut}}{% endif -%}{%- if not loop.last -%},{% endif %}
+    {{attribut}}{% endif -%},
     {%- endif -%}
     {%- endfor -%}
     {%- for key, value in dict_subfields.items() %}

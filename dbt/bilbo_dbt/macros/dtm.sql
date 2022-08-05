@@ -20,6 +20,9 @@
 {%- set type_t1 = "cte" -%}
 {%- set cte = "t2" -%}
 {%- set ns.str = "" -%}
+{%- set table_name = [] -%}
+{%- set alias = [] -%}
+{%- set joint_value = [] -%}
 
 {%- for tab in list_tab -%}
     {%- do list_statut.append(tab["statut"]) -%}
@@ -81,7 +84,8 @@
         {%- elif res_min_ind >= res -%}
             {%- do list_attributs.append(['!hex_id_parent',var("sep"),res]|join("")) -%}  
         {%- elif res_max_ind <= res -%}
-            {%- do list_attributs.append(['!hex_id_children',var("sep"),res]|join("")) -%}  
+            {%- do list_attributs.append(['!hex_id_children',var("sep"),res]|join("")) -%}
+            {%- do list_jointures.append({list_tab[ix_ind]["nom"]:'!', ['h3_to_children+',list_tab[ix_ind]["nom"],"+",res]|join(""):''}) -%}  
         {%- else -%}
             {%- do list_attributs.append(['!hex_id',var("sep"),res]|join("")) -%} 
             {%- do list_jointures.append({list_tab[ix_ind]["nom"]:'!', ['h3_to_children+',list_tab[ix_ind]["nom"],"+",res]|join(""):''}) -%}
@@ -97,6 +101,16 @@
                 {%- elif list[0] == '!date' -%}
                     {%- do date_attributs.append("!"+list[2]+" AS "+list[3])-%}
                     {%- do date_jointures.append({tab["nom"]:"!"+list[1],var("nom_tab_date"):"date_id"})-%}
+                {%- elif tab["nom"] == list_tab[ix_ind]["nom"] and 'geom' in list[0] -%}
+                    {%- if (res_min_dim == res) and (res_max_dim == res) -%}
+                        {%- do list_attributs.append(list[0]+"_parent"+var("sep")+list[1:]|join(var("sep"))) -%} 
+                    {%- elif res_min_ind >= res -%}
+                        {%- do list_attributs.append(list[0]+"_parent"+var("sep")+list[1:]|join(var("sep"))) -%} 
+                    {%- elif res_max_ind <= res -%}
+                        {%- do list_attributs.append(list[0]+"_children"+var("sep")+list[1:]|join(var("sep"))) -%} 
+                    {%- else -%}
+                        {%- do list_attributs.append(attribut) -%} 
+                    {%- endif -%}  
                 {%- elif "sum_area_adaptatif" in list[0] -%}
                     {%- for idx in ix_con -%}
                         {%- set ns.str = ns.str + list_tab[idx]["nom"] + ".hex_id+" -%}
@@ -120,6 +134,16 @@
                 {%- elif list[0] == '!date' -%}
                     {%- do date_attributs_dim.append("!"+list[2]+" AS "+list[3])-%}
                     {%- do date_jointures_dim.append({tab["nom"]:"!"+list[1],var("nom_tab_date"):"date_id"})-%}
+                {%- elif 'geom' in list[0] -%}
+                    {%- if (res_min_dim == res) and (res_max_dim == res) -%}
+                        {%- do list_attributs_dim.append(list[0]+"_parent"+var("sep")+list[1:]|join(var("sep"))) -%} 
+                    {%- elif res_min_ind >= res -%}
+                        {%- do list_attributs_dim.append(list[0]+"_parent"+var("sep")+list[1:]|join(var("sep"))) -%} 
+                    {%- elif res_max_ind <= res -%}
+                        {%- do list_attributs_dim.append(list[0]+"_children"+var("sep")+list[1:]|join(var("sep"))) -%} 
+                    {%- else -%}
+                        {%- do list_attributs_dim.append(attribut) -%} 
+                    {%- endif -%}  
                 {%- endif -%}  
             {%- else -%}
                 {%- do list_attributs_dim.append(attribut) -%}
@@ -164,9 +188,11 @@
         {%- elif res_min_dim >= res -%}
             {%- do list_jointures_dim.append({cte:'!hex_id', list_tab[idx]["nom"]:['!hex_id_parent',var("sep"),res]|join("")}) -%}
         {%- elif res_max_dim <= res -%}
-            {%- do list_jointures_dim.append({cte:'!hex_id', list_tab[idx]["nom"]:['!hex_id_children',var("sep"),res]|join("")}) -%} 
+            {%- do list_jointures_dim.append({list_tab[idx]["nom"]:'', ['h3_to_children+',list_tab[idx]["nom"],"+",res]|join(""):''}) -%} 
+            {%- do list_jointures_dim.append({cte:'hex_id', list_tab[idx]["nom"]:['!hex_id_children',var("sep")]|join("")}) -%}
         {%- else -%}
-            {%- do list_jointures_dim.append({cte:'!hex_id', list_tab[idx]["nom"]:['!hex_id',var("sep"),res]|join("")}) -%} 
+            {%- do list_jointures_dim.append({list_tab[idx]["nom"]:'', ['h3_to_children+',list_tab[idx]["nom"],"+",res]|join(""):''}) -%}
+            {%- do list_jointures_dim.append({cte:'hex_id', list_tab[idx]["nom"]:['!hex_id',var("sep"),res]|join("")}) -%} 
         {%- endif -%}  
     {%- endfor -%} 
 {%- endif -%}  
@@ -206,7 +232,63 @@
 {%- endif %}
 
 {% if 'dimension' in  list_statut -%}
-    {{select_statement(dict_attributs=dict_attributs_dim, list_jointures=list_jointures_dim, name_of_the_table="t3", mode="tab")}}
+    {{select_statement(dict_attributs=dict_attributs_dim, list_jointures=list_jointures_dim, name_of_the_table="t3", mode="tab", display_jointures=false, display_sortby=false)}}
+
+    {%- for dict in list_jointures_dim -%}
+        {%- for key, value in dict.items() -%}
+            {%- do table_name.append(key) -%}
+            {%- do alias.append(key) -%}
+            {%- do joint_value.append(value) -%}
+        {%- endfor -%}
+    {%- endfor -%}
+
+    {%- for i in range((table_name|length)//2) -%}
+        {%- for j in range(2) -%}
+            {%- if var("sep") in table_name[2*i+j] -%}
+                {%- set list = table_name[2*i+j].split(var("sep")) -%}
+                    {%- if list[0] == "h3_to_children" -%}
+                        {%- do replace_item(table_name,["h3_to_children(",list[1],".hex_id::h3index,",list[2],") AS children_",list[1].split(".")[-1]]|join(""),2*i+j) -%}
+                        {%- do replace_item(alias,"children_"+list[1].split(".")[-1],2*i+j) -%}
+                    {%- endif -%}
+            {%- endif -%}   
+        {%- endfor -%}  
+    {%- endfor -%}
+
+    {#- Jointures #}
+    FROM 
+    {%- for key, value in dict_attributs_dim.items() %}
+        {{key}}{%- if not loop.last -%}, {%- endif -%}
+    {%- endfor %}
+    {%- for i in range((table_name|length)//2) %}
+            {%- if table_name[2*i] not in table_name[:2*i] -%}
+                {%- set a = 2*i -%}
+                {%- set b = 2*i+1 -%}
+            {%- else %}
+                {%- set a = 2*i+1 -%}
+                {%- set b = 2*i -%}
+            {%- endif -%} 
+            {%- set joint_value_a = joint_value[a]|replace("!","") -%}
+            {%- set joint_value_b = joint_value[b]|replace("!","") -%}
+            {%- if (joint_value_a=="") and (joint_value_b=="") %}
+        JOIN {{table_name[b]}} {{on_statement(a,b,var("sep"),table_name,alias,joint_value)}}
+            {%- endif -%} 
+    {%- endfor %}
+    WHERE {{''}}
+    {%- for i in range((table_name|length)//2) %}
+            {%- if table_name[2*i] not in table_name[:2*i] %}
+                {%- set a = 2*i -%}
+                {%- set b = 2*i+1 -%}
+            {%- else %}
+                {%- set a = 2*i+1 -%}
+                {%- set b = 2*i -%}
+            {%- endif -%} 
+            {%- set joint_value_a = joint_value[a]|replace("!","") -%}
+            {%- set joint_value_b = joint_value[b]|replace("!","") -%}
+            {%- if not ((joint_value_a=="") and (joint_value_b=="")) -%}
+        {{on_statement(a,b,var("sep"),table_name,alias,joint_value,where=true)}}{%- if not loop.last %}{{" AND "}}{%- endif -%} 
+            {%- endif -%} 
+    {%- endfor %}
+    {{select_statement(dict_attributs=dict_attributs_dim, list_jointures=list_jointures_dim, name_of_the_table="t3", mode="tab", display_attributs=false, display_jointures=false)}}
 {%- endif -%}
 
 

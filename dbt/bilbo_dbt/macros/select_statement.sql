@@ -1,4 +1,4 @@
-{%- macro select_statement(dict_attributs, list_jointures=[], name_of_the_table="my_tab", mode="tab", set_index=false, set_esri_requirements=false) -%}
+{%- macro select_statement(dict_attributs, list_jointures=[], name_of_the_table="my_tab", mode="tab", set_index=false, set_esri_requirements=false, display_attributs=true, display_jointures=true, display_sortby=true) -%}
 {%- set ns = namespace() -%}
 {%- set table_name = [] -%}
 {%- set alias = [] -%}
@@ -31,36 +31,38 @@
                     {%- do replace_item(table_name,["(SELECT * FROM bilbo.jointure_adaptative('", list[1], "','", list[2], "',", list[3], ",", list[4], ")) AS ", list[5]]|join(""),2*i+j) -%}
                     {%- do replace_item(alias,list[5],2*i+j) -%}
                 {%- elif list[0] == "h3_to_children" -%}
-                    {%- do replace_item(table_name,["h3_to_children(",list[1],".hex_id::h3index,",list[2],") AS ",var("dict_shortcut")[list[0]]]|join(""),2*i+j) -%}
-                    {%- do replace_item(alias,var("dict_shortcut")[list[0]],2*i+j) -%}
+                    {%- do replace_item(table_name,["h3_to_children(",list[1],".hex_id::h3index,",list[2],") AS children_",list[1].split(".")[-1]]|join(""),2*i+j) -%}
+                    {%- do replace_item(alias,"children_"+list[1].split(".")[-1],2*i+j) -%}
                 {%- endif -%}
         {%- endif -%}   
     {%- endfor -%}  
 {%- endfor -%}
 
-{%- if mode == "cte" -%}{{name_of_the_table}} AS ({%- elif mode == "alias" -%}({%- endif -%}SELECT
+{%- if display_attributs -%}{%- if mode == "cte" -%}{{name_of_the_table}} AS ({%- elif mode == "alias" -%}({%- endif -%}SELECT{%- endif -%}
 {#- Attributs -#}
 {%- for key, value in dict_attributs.items() -%}
     {%- for attribut in value -%}
         {%- if attribut[0]=="!" or attribut[1]=="!" -%}
             {%- set attribut = attribut|replace("!","") -%}
-            {%- set groupby = groupby.append(([alias[table_name.index(key)],attribut|replace("?","")]|join(".")).split(" AS ")[0]) -%}
+            {%- do groupby.append(([alias[table_name.index(key)],attribut|replace("?","")]|join(".")).split(" AS ")[0]) -%}
         {%- endif -%}
         {%- if attribut[0]=="?" or attribut[1]=="?" -%}
             {%- set attribut = attribut|replace("?","") -%}
-            {%- set orderby = orderby.append(([alias[table_name.index(key)],attribut|replace("!","")]|join(".")).split(" AS ")[0]) -%}
+            {%- do orderby.append(([alias[table_name.index(key)],attribut|replace("!","")]|join(".")).split(" AS ")[0]) -%}
         {%- endif -%}
-        
+        {%- if display_attributs -%}    
         {%- if var("sep") in attribut %}
     {{fonctions(attribut, var("sep"), key, table_name, alias, as_statement=true)}}
         {%- else %} 
     {{alias[table_name.index(key)]}}.{{attribut}}
         {%- endif -%}
-        {%- if not loop.last -%}, {%- endif -%}
+        {%- if display_attributs -%}{%- if not loop.last -%}, {%- endif -%}{%- endif -%}
+       {%- endif -%}
     {%- endfor -%} 
-    {%- if not loop.last -%}, {%- endif -%}
+    {%- if display_attributs -%}{%- if not loop.last -%}, {%- endif -%}{%- endif -%}
 {%- endfor -%} 
 
+{%- if display_jointures -%}
 {#- Jointures -#}
 {%- for i in range((table_name|length)//2) %}
     {%- set type_jointure = "JOIN" %}
@@ -83,7 +85,9 @@
         {{type_jointure}} {{table_name[a]}} {{on_statement(a,b,var("sep"),table_name,alias,joint_value)}}
     {%- endif %}
 {%- endfor %}
+{%- endif -%}
 
+{%- if display_sortby -%}
 {#- Group By -#}
 {%- if groupby|length %}
     GROUP BY 
@@ -104,13 +108,14 @@
     {%- for i in range(orderby|length) %}
         {%- set orderby_i = orderby[i] -%}
         {%- if var("sep") in orderby_i -%}
-            {%- set attribut =  orderby_i.split(".") -%}
+             {%- set attribut =  orderby_i.split(".") -%}
             {%- set orderby_i = fonctions(attribut[2], var("sep"), attribut[0]+"."+attribut[1], table_name, alias, as_statement=false) -%}
         {%- endif %}
         {{orderby_i}}
         {%- if not loop.last %}, {% endif %}
     {%- endfor %}
 {%- endif -%}{%- if mode == "alias" -%}) AS {{name_of_the_table}}{% elif mode == "cte" %}){%- endif -%}
+{%- endif -%}
 
 {#- Index -#}
 {%- set index_hook = ["CREATE INDEX IF NOT EXISTS ix_",schema,"_",name_of_the_table,"_hex_id ON ",
