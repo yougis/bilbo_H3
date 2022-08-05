@@ -299,9 +299,7 @@
     TABLESPACE pg_default;']|join("") -%}
 
 {# ESRI #}
-{%- set esri_hook = ["ALTER TABLE IF EXISTS ",schema,".",name_of_the_table,
-    " ADD CONSTRAINT ",schema,"_",name_of_the_table,"_pkey PRIMARY KEY (id_esri);
-ALTER TABLE IF EXISTS ",schema,".",name_of_the_table,"
+{%- set esri_hook = ["ALTER TABLE IF EXISTS ",schema,".",name_of_the_table,"
     ADD CONSTRAINT enforce_srid_shape CHECK (st_srid(geometry) = 3163);"]|join("") -%}
 
 {%- if set_index -%}
