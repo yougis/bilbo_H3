@@ -1,4 +1,7 @@
 {%- macro select_statement(dict_attributs, list_jointures=[], name_of_the_table="my_tab", mode="tab", set_index=false, set_esri_requirements=false, display_attributs=true, display_jointures=true, display_sortby=true) -%}
+{#- Macro permettant de générer une clause SELECT -#}
+
+{#- Variables -#}
 {%- set ns = namespace() -%}
 {%- set table_name = [] -%}
 {%- set alias = [] -%}
@@ -117,13 +120,14 @@
 {%- endif -%}{%- if mode == "alias" -%}) AS {{name_of_the_table}}{% elif mode == "cte" %}){%- endif -%}
 {%- endif -%}
 
+{#- Post-hooks -#}
 {#- Index -#}
 {%- set index_hook = ["CREATE INDEX IF NOT EXISTS ix_",schema,"_",name_of_the_table,"_hex_id ON ",
     schema,".",name_of_the_table,' USING btree
     (hex_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;']|join("") -%}
 
-{# ESRI #}
+{#- ESRI -#}
 {%- set esri_hook = ["ALTER TABLE IF EXISTS ",schema,".",name_of_the_table,
     " ADD CONSTRAINT ",schema,"_",name_of_the_table,"_pkey PRIMARY KEY (id_esri);
 ALTER TABLE IF EXISTS ",schema,".",name_of_the_table,"

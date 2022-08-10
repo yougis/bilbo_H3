@@ -1,8 +1,10 @@
-{%- macro dtm(list_tab,name_of_the_table='table',res=8,json_agg={},set_index=false,set_esri_requirements=false) -%}
+{%- macro dtm(list_tab, name_of_the_table='table', res=8, json_agg={}, set_index=false, set_esri_requirements=false) -%}
+{#- Macro permettant de créer des DataMarts -#}
 {{config(materialized="table", alias=name_of_the_table)}}
 
+{#- Variables -#}
 {%- set ns = namespace() -%}
-
+{%- set ns.str = "" -%}
 {%- set date_attributs = [] -%}
 {%- set date_jointures = [] -%}
 {%- set date_attributs_dim = [] -%}
@@ -10,16 +12,15 @@
 {%- set json_keys = [] -%}
 {%- set json_values = [] -%}
 {%- set groupby = [] -%}
+{%- set groupby_sans_json_agg = [] -%}
 {%- set dict_attributs = {} -%}
 {%- set list_jointures = [] -%}
 {%- set list_jointures_dim = [] -%}
-{%- set groupby_sans_json_agg = [] -%}
 {%- set list_statut = [] -%}
 {%- set ix_ind = None -%}
 {%- set ix_con = None -%}
 {%- set type_t1 = "cte" -%}
 {%- set cte = "t2" -%}
-{%- set ns.str = "" -%}
 {%- set table_name = [] -%}
 {%- set alias = [] -%}
 {%- set joint_value = [] -%}
@@ -44,6 +45,7 @@
     {%- set type_t1 = "table"-%}
 {%- endif -%}
 
+{#- Récupération des résolutions minimales et maximales de la table indicateur -#}
 {%- set result_ind = run_query("SELECT MIN(h3_get_resolution(hex_id::h3index)), MAX(h3_get_resolution(hex_id::h3index)) FROM " + list_tab[ix_ind]["nom"]) -%}
 {%- if execute -%}
     {%- set res_min_ind = result_ind.columns[0].values()[0] -%}
@@ -211,8 +213,8 @@
 {%- endif -%}
 
 
-{% if 'dimension' in  list_statut or ('context' in  list_statut and json_agg!={}) -%}WITH {% endif -%}{{select_statement(dict_attributs=dict_attributs, list_jointures=list_jointures, name_of_the_table="t1", mode=type_t1)}}{%- if 'dimension' in  list_statut and 'context' in  list_statut and json_agg!={}-%},{%- endif %}
-{%- if 'context' in  list_statut and json_agg!={} %}
+{% if 'dimension' in list_statut or ('context' in  list_statut and json_agg!={}) -%}WITH {% endif -%}{{select_statement(dict_attributs=dict_attributs, list_jointures=list_jointures, name_of_the_table="t1", mode=type_t1)}}{%- if 'dimension' in  list_statut and 'context' in  list_statut and json_agg!={}-%},{%- endif %}
+{%- if 'context' in list_statut and json_agg!={} %}
 
 {% if 'dimension' in  list_statut -%}t2 AS ({%- endif -%}SELECT 
     hex_id, {{''}}
@@ -232,6 +234,7 @@
 {%- endif %}
 
 {% if 'dimension' in  list_statut -%}
+    {#- Attributs -#}
     {{select_statement(dict_attributs=dict_attributs_dim, list_jointures=list_jointures_dim, name_of_the_table="t3", mode="tab", display_jointures=false, display_sortby=false)}}
 
     {%- for dict in list_jointures_dim -%}
@@ -287,18 +290,20 @@
             {%- if not ((joint_value_a=="") and (joint_value_b=="")) -%}
         {{on_statement(a,b,var("sep"),table_name,alias,joint_value,where=true)}}{%- if not loop.last %}{{" AND "}}{%- endif -%} 
             {%- endif -%} 
-    {%- endfor %}
+    {%- endfor -%}
+
+    {#- Group By #}
     {{select_statement(dict_attributs=dict_attributs_dim, list_jointures=list_jointures_dim, name_of_the_table="t3", mode="tab", display_attributs=false, display_jointures=false)}}
 {%- endif -%}
 
-
+{#- Post-hooks -#}
 {#- Index -#}
 {%- set index_hook = ["CREATE INDEX IF NOT EXISTS ix_",schema,"_",name_of_the_table,"_hex_id ON ",
     schema,".",name_of_the_table,' USING btree
     (hex_id COLLATE pg_catalog."default" ASC NULLS LAST)
     TABLESPACE pg_default;']|join("") -%}
 
-{# ESRI #}
+{#- ESRI -#}
 {%- set esri_hook = ["ALTER TABLE IF EXISTS ",schema,".",name_of_the_table,"
     ADD CONSTRAINT enforce_srid_shape CHECK (st_srid(geometry) = 3163);"]|join("") -%}
 
