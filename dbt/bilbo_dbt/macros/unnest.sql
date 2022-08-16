@@ -1,5 +1,5 @@
 {%- macro unnest(table_name, field, dict_subfields) -%}
-{#- Macro permettant d-exploser un json en plusieurs lignes -#}
+{#- Macro permettant de desagreger un json en plusieurs lignes -#}
 {{config(materialized="view", alias="view_"+table_name.split(".")[-1])}}
 
 {#- Récupération des noms de colonnes de la table en question -#}
