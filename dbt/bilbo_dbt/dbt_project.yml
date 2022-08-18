@@ -1,4 +1,3 @@
-
 # Project names should contain only lowercase characters
 # and underscores. A good package name should reflect your organization's
 # name or the intended use of these models
@@ -30,3 +29,8 @@ clean-targets:         # directories to be removed by `dbt clean`
 models:
   bilbo_dbt:
     +materialized: table
+
+# Define variables here
+vars:
+  sep: "+"
+  nom_tab_date: "bilbo.dim_date"
