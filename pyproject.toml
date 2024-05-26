@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "bilbo-dwh"
+version = "0.1.0"
+description = "Indexer des jeux de données géographique sur une grille H3 selon différentes résolution de la grille H3"
+authors = ["hugo.roussaffa <hugo.roussaffa@oeil.nc>"]
+license = "CC By SA"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+python-dotenv = "^1.0.1"
+numpy = "^1.26.4"
+scipy = "^1.13.1"
+intake = "^2.0.5"
+pandas = "^2.2.2"
+geopandas = "^0.14.4"
+h3 = "^3.7.7"
+h3pandas = "^0.2.6"
+tobler = "^0.11.2"
+sqlalchemy = "^2.0.30"
+geoalchemy2 = "^0.15.1"
+dask-geopandas = "^0.3.1"
+dask = "^2024.5.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
